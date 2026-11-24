@@ -76,7 +76,8 @@ export async function download(url, dir) {
 
   let r = await attempt([]);
   let got = collect(dir);
-  if (r.code !== 0 || (!got.videos.length && !got.images.length)) {
+  // yt-dlp exits non-zero on photo posts ("No video formats") even when it wrote the images.
+  if (!got.videos.length && !got.images.length) {
     log.warn('download anónimo falhou, a tentar com cookies do Safari:', lastLine(r.stderr));
     r = await attempt(['--cookies-from-browser', 'safari']);
     got = collect(dir);
