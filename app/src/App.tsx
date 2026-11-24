@@ -1,13 +1,11 @@
 import { HashRouter, Route, Routes, Navigate } from 'react-router-dom';
-import { AuthProvider, useAuth } from './hooks/useAuth';
+import { AuthProvider } from './hooks/useAuth';
 import { RecipesProvider } from './hooks/useRecipes';
 import { ShoppingProvider } from './hooks/useShopping';
 import { TimersProvider } from './hooks/useTimers';
 import { ToastProvider } from './hooks/useToast';
 import { useTheme } from './hooks/useTheme';
 import Layout from './components/Layout';
-import SketchLoader from './components/SketchLoader';
-import Login from './pages/Login';
 import Home from './pages/Home';
 import WhatCanICook from './pages/WhatCanICook';
 import RecipePage from './pages/Recipe';
@@ -17,10 +15,7 @@ import Add from './pages/Add';
 import Settings from './pages/Settings';
 
 function Gate() {
-  const { session, loading } = useAuth();
   useTheme();
-  if (loading) return <div className="login"><SketchLoader size={140} /></div>;
-  if (!session) return <Login />;
   return (
     <RecipesProvider>
       <ShoppingProvider>

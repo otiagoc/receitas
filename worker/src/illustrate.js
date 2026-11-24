@@ -7,14 +7,15 @@ const BATCH = Number(process.env.RECEITAS_SVG_BATCH || 4);
 const CONCURRENCY = Number(process.env.RECEITAS_SVG_CONCURRENCY || 2);
 
 const STYLE = `GUIA DE ESTILO (obrigatório em todos os desenhos):
-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"> SEM atributos width/height.
+- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" color="#3b2f2a"> SEM atributos width/height.
 - Estilo caderno de esboços desenhado à mão: primeiro elemento é <rect width="400" height="300" fill="#fbf6ec"/> (papel quente).
-- Traço de tinta escura stroke="#3b2f2a", stroke-width 2 a 3, stroke-linecap="round" stroke-linejoin="round", linhas ligeiramente imperfeitas (curvas Q/C com pequenas irregularidades, não formas geométricas perfeitas).
-- Preenchimentos suaves tipo aguarela com fill-opacity 0.35–0.7 em paleta quente de comida (tomate #d9534f, laranja #e8a33d, amarelo #f2c14e, verde ervas #7fa65a, castanho #a0673a, creme #f3e3c3, etc.), ligeiramente desalinhados do contorno como aguarela real.
-- Opcional: <defs><filter id="wobble"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/><feDisplacementMap in="SourceGraphic" scale="2.5"/></filter></defs> aplicado a grupos de traço (use ids únicos por desenho, ex.: wobble-h, wobble-3).
-- TODOS os traços de contorno (path/line/polyline/circle/ellipse com stroke) levam class="ink" (a app anima o desenho do traço). Os preenchimentos de aguarela sem stroke NÃO levam class="ink".
-- Sem texto, ou no máximo uma etiqueta de 1–3 palavras em pt-PT.
-- PROIBIDO: <script>, atributos on*, <image>, <foreignObject>, <style>, href externos, fontes externas.
+- Usa SÓ atributos de apresentação (fill=, stroke=, stroke-width=, opacity=, fill-opacity=…). Nada de <style> nem atributo style=.
+- Desenha em duas camadas separadas:
+  1) AGUARELA (por baixo): formas de cor suave SEM stroke, fill-opacity 0.35–0.7, paleta quente de comida (tomate #d9534f, laranja #e8a33d, amarelo #f2c14e, verde ervas #7fa65a, castanho #a0673a, creme #f3e3c3, rosa #e9a99b…), ligeiramente desalinhadas do contorno como aguarela real. Estas NÃO levam class="ink".
+  2) TINTA (por cima): todos os contornos com class="ink" stroke="currentColor" fill="none" stroke-width 2 a 3 stroke-linecap="round" stroke-linejoin="round", linhas ligeiramente imperfeitas (curvas Q/C com pequenas irregularidades). Um traço de tinta NUNCA tem preenchimento — a cor vai na camada de aguarela.
+- Opcional: <defs><filter id="wobble-X"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/><feDisplacementMap in="SourceGraphic" scale="2.5"/></filter></defs> aplicado com filter="url(#wobble-X)" a grupos (ids únicos por desenho).
+- Sem texto, ou no máximo uma etiqueta de 1–3 palavras em português europeu (pt-PT), com fill="currentColor".
+- PROIBIDO: <script>, atributos on*, <image>, <use>, <a>, <foreignObject>, <style>, qualquer href, fontes externas.
 - Cada SVG com menos de ~10 KB: usa poucos paths bem escolhidos em vez de muitos detalhes.`;
 
 function recipeSummary(recipe) {

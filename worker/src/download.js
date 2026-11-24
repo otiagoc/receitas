@@ -1,9 +1,10 @@
 // Download an Instagram reel / post (video, photo or carousel) with yt-dlp.
 import fs from 'node:fs';
 import path from 'node:path';
-import { run, log, StageError, config } from './util.js';
+import { run, log, StageError, config, WORKER_DIR } from './util.js';
 
 const YTDLP = process.env.YTDLP_BIN || 'yt-dlp';
+const COOKIES_FILE = process.env.RECEITAS_COOKIES || path.join(WORKER_DIR, 'cookies.txt');
 
 function baseArgs(url) {
   return [
@@ -25,7 +26,7 @@ function classifyFailure(stderr) {
   const s = stderr || '';
   if (/Operation not permitted|Cookies\.binarycookies|PermissionError|not authorized to access/i.test(s)) {
     return new StageError(
-      'Sem acesso aos cookies do Safari. Dá "Acesso total ao disco" ao node/Terminal em Definições do Sistema › Privacidade e segurança.',
+      'O Instagram pediu sessão e o worker não consegue ler os cookies do Safari. Corre worker/scripts/export-cookies.sh no Terminal (ou dá "Acesso total ao disco" ao node).',
       'safari cookies', { retryable: false });
   }
   if (/login required|rate-limit|requested content is not available|Please log in|empty media response|private/i.test(s)) {
@@ -78,9 +79,19 @@ export async function download(url, dir) {
   let got = collect(dir);
   // yt-dlp exits non-zero on photo posts ("No video formats") even when it wrote the images.
   if (!got.videos.length && !got.images.length) {
-    log.warn('download anónimo falhou, a tentar com cookies do Safari:', lastLine(r.stderr));
-    r = await attempt(['--cookies-from-browser', 'safari']);
-    got = collect(dir);
+    log.warn('download anónimo falhou:', lastLine(r.stderr));
+    // 1) cookies exported from Safari with scripts/export-cookies.sh (no Full Disk Access needed)
+    if (fs.existsSync(COOKIES_FILE)) {
+      log.info('a tentar com worker/cookies.txt');
+      r = await attempt(['--cookies', COOKIES_FILE]);
+      got = collect(dir);
+    }
+    // 2) read Safari cookies directly (needs Full Disk Access for node under launchd)
+    if (!got.videos.length && !got.images.length) {
+      log.info('a tentar com cookies do Safari');
+      r = await attempt(['--cookies-from-browser', 'safari']);
+      got = collect(dir);
+    }
     if (r.code !== 0 && !got.videos.length && !got.images.length) throw classifyFailure(r.stderr);
   }
   if (!got.videos.length && !got.images.length) throw classifyFailure(r.stderr);

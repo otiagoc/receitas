@@ -1,10 +1,9 @@
 import { useEffect, useMemo, useState } from 'react';
 import { supabase } from '../lib/supabase';
-import { useAuth } from '../hooks/useAuth';
 import { useRecipes } from '../hooks/useRecipes';
 import { useTheme, type Theme } from '../hooks/useTheme';
 import { useToast } from '../hooks/useToast';
-import { IconCopy, IconEye, IconEyeOff, IconLogout, IconMoon, IconSun, IconSparkle } from '../components/Icons';
+import { IconCopy, IconEye, IconEyeOff, IconMoon, IconSun, IconSparkle } from '../components/Icons';
 
 const rtf = new Intl.RelativeTimeFormat('pt-PT', { numeric: 'auto' });
 export function timeAgo(iso: string): string {
@@ -17,7 +16,6 @@ export function timeAgo(iso: string): string {
 }
 
 export default function Settings() {
-  const { session } = useAuth();
   const { recipes } = useRecipes();
   const [theme, setTheme] = useTheme();
   const toast = useToast();
@@ -90,11 +88,6 @@ export default function Settings() {
         </div>
       </section>
 
-      <section className="card">
-        <h2>Sessão</h2>
-        <p className="muted">Entraste como <b>{session?.user.email}</b>.</p>
-        <button className="btn danger" style={{ justifySelf: 'start' }} onClick={() => supabase.auth.signOut()}><IconLogout /> Terminar sessão</button>
-      </section>
       <p className="muted hand" style={{ textAlign: 'center', fontSize: '1.2rem' }}>Receitas · {recipes.filter((r) => r.status === 'done').length} receitas no caderno</p>
     </div>
   );

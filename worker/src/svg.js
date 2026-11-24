@@ -5,7 +5,7 @@ const ALLOWED = new Set([
   'svg', 'g', 'path', 'rect', 'circle', 'ellipse', 'line', 'polyline', 'polygon', 'text', 'tspan',
   'defs', 'filter', 'feTurbulence', 'feDisplacementMap', 'feGaussianBlur', 'feColorMatrix', 'feOffset',
   'feBlend', 'feComposite', 'feMerge', 'feMergeNode', 'feFlood', 'feMorphology',
-  'linearGradient', 'radialGradient', 'stop', 'clipPath', 'mask', 'pattern', 'use', 'symbol', 'marker',
+  'linearGradient', 'radialGradient', 'stop', 'clipPath', 'mask', 'pattern', 'symbol', 'marker',
   'title', 'desc',
 ]);
 const STROKE_SHAPES = new Set(['path', 'line', 'polyline', 'polygon', 'circle', 'ellipse', 'rect']);
@@ -25,6 +25,17 @@ const parserOpts = {
 const parser = new XMLParser(parserOpts);
 const builder = new XMLBuilder({ ...parserOpts, format: false, suppressEmptyNode: true });
 
+const INK = '#3b2f2a';
+/** Very dark, low-saturation colours count as ink. */
+function isInk(v) {
+  const m = String(v).trim().toLowerCase().match(/^#([0-9a-f]{3}|[0-9a-f]{6})$/);
+  if (!m) return v === 'black';
+  let h = m[1];
+  if (h.length === 3) h = h.split('').map((c) => c + c).join('');
+  const [r, g, b] = [0, 2, 4].map((i) => parseInt(h.slice(i, i + 2), 16));
+  return Math.max(r, g, b) < 90;
+}
+
 const BAD_VALUE = /javascript:|data:|vbscript:|expression\s*\(|@import/i;
 
 function cleanAttrs(tag, attrs = {}, isRoot) {
@@ -34,10 +45,7 @@ function cleanAttrs(tag, attrs = {}, isRoot) {
     const lname = name.toLowerCase();
     const val = String(v);
     if (lname.startsWith('on')) continue;
-    if (lname === 'href' || lname === 'xlink:href') {
-      if (val.startsWith('#')) out[k] = val;
-      continue;
-    }
+    if (lname === 'href' || lname === 'xlink:href' || lname === 'style') continue; // the app strips these anyway
     if (BAD_VALUE.test(val)) continue;
     // Only same-document references are allowed inside url(...)
     if (/url\(/i.test(val) && /url\(\s*['"]?(?!#)/i.test(val)) continue;
@@ -47,6 +55,11 @@ function cleanAttrs(tag, attrs = {}, isRoot) {
   if (isRoot) {
     out['@_xmlns'] = 'http://www.w3.org/2000/svg';
     out['@_viewBox'] = '0 0 400 300';
+    if (!out['@_color']) out['@_color'] = INK; // currentColor fallback; the app overrides via CSS color
+  }
+  // Dark ink strokes/text become currentColor so the app can recolour them (dark mode).
+  for (const a of ['@_stroke', '@_fill']) {
+    if (out[a] && isInk(out[a]) && !(tag === 'rect' && a === '@_fill')) out[a] = 'currentColor';
   }
   // Ensure stroked shapes get class="ink" so the app can animate the draw-in.
   if (STROKE_SHAPES.has(tag) && out['@_stroke'] && out['@_stroke'] !== 'none' && !out['@_class']) {

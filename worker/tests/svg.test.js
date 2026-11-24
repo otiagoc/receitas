@@ -10,7 +10,10 @@ test('sanitizes forbidden content', () => {
   for (const bad of ['script', 'foreignObject', '<image', 'onload', 'onclick', 'http://x', 'evil', 'width="400" height="300" viewBox']) assert.ok(!s.includes(bad), bad + ' in ' + s);
   assert.ok(s.includes('class="ink"'));
   assert.ok(s.includes('filter="url(#w)"'));
-  assert.ok(s.includes('href="#a"'));
+  assert.ok(!s.includes('href') && !s.includes('<use'));
+  assert.ok(s.includes('stroke="currentColor"') && !s.includes('stroke="#3b2f2a"'));
+  assert.ok(s.includes('color="#3b2f2a"'));
+  assert.ok(s.includes('fill="#fbf6ec"'));
   assert.ok(s.startsWith('<svg'));
   assert.ok(s.includes('viewBox="0 0 400 300"'));
   assert.ok(s.includes('<rect width="400" height="300"'));
