@@ -1,0 +1,12 @@
+.credentials.local
+.env*
+**/node_modules
+**/dist
+worker/models
+worker/tmp
+worker/logs
+shortcut/*.shortcut
+.DS_Store
+.claude-flow
+*.log
+*.tsbuildinfo

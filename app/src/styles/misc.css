@@ -1,0 +1,45 @@
+/* sketch loader */
+.sketch-loader { color: var(--ink-2); overflow: visible; }
+.sketch-loader .sl { stroke-dasharray: 220; stroke-dashoffset: 220; animation: sketch 4.2s var(--ease) infinite; }
+.sketch-loader .sl2 { animation-delay: 0.35s; }
+.sketch-loader .sl3 { animation-delay: 0.8s; }
+.sketch-loader .sl4 { animation-delay: 1.1s; }
+.sketch-loader .steam { stroke: var(--accent); stroke-width: 2.5; }
+.sketch-loader .s1 { animation-delay: 1.4s; } .sketch-loader .s2 { animation-delay: 1.55s; } .sketch-loader .s3 { animation-delay: 1.7s; }
+@keyframes sketch { 0% { stroke-dashoffset: 220; opacity: 1; } 45% { stroke-dashoffset: 0; } 85% { stroke-dashoffset: 0; opacity: 1; } 100% { stroke-dashoffset: 0; opacity: 0; } }
+.sketch-loader .pencil { animation: pencil 4.2s ease-in-out infinite; }
+@keyframes pencil {
+  0% { transform: translate(28px, 52px); } 12% { transform: translate(132px, 52px); }
+  22% { transform: translate(126px, 92px); } 30% { transform: translate(80px, 110px); } 38% { transform: translate(36px, 80px); }
+  48% { transform: translate(18px, 70px); } 56% { transform: translate(142px, 70px); } 64% { transform: translate(80px, 40px); }
+  72% { transform: translate(60px, 10px); } 78% { transform: translate(100px, 10px); } 100% { transform: translate(28px, 52px); }
+}
+
+/* login */
+.login { min-height: 100dvh; display: grid; place-items: center; padding: calc(var(--sat) + 24px) 20px calc(var(--sab) + 24px); }
+.login-card { width: min(400px, 100%); display: grid; gap: 1.1rem; animation: fadeUp 0.5s var(--ease) both; }
+.login-card .logo { font-size: 2.4rem; justify-self: center; }
+.login-card .logo img { width: 52px; height: 52px; border-radius: 14px; }
+.login-card .tagline { text-align: center; color: var(--ink-2); font-family: var(--hand); font-size: 1.45rem; margin-top: -0.6rem; }
+.form-error { color: var(--danger); font-size: 0.9rem; }
+
+/* add page */
+.add-wrap { max-width: 560px; display: grid; gap: 1.25rem; }
+.add-done { text-align: center; display: grid; gap: 0.75rem; justify-items: center; padding: 1.5rem; }
+.add-done .tick { width: 72px; height: 72px; border-radius: 50%; display: grid; place-items: center; background: var(--sage-soft); color: var(--sage); animation: pop 0.5s var(--ease); }
+.add-done .tick svg { width: 38px; height: 38px; stroke-width: 2.4; }
+
+/* settings */
+.settings { display: grid; gap: 1rem; max-width: 720px; }
+.settings section { padding: 1.25rem; display: grid; gap: 0.8rem; }
+.settings h2 { font-size: 1.25rem; }
+.settings ol { margin: 0; padding-left: 1.25rem; display: grid; gap: 0.45rem; color: var(--ink-2); }
+.token-row { display: flex; gap: 0.5rem; align-items: center; }
+.token-row code { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; background: var(--paper-2); border-radius: 10px; padding: 0.65rem 0.8rem; font-size: 0.85rem; }
+.seg { display: inline-flex; background: var(--paper-2); border-radius: 999px; padding: 4px; gap: 2px; }
+.seg button { white-space: nowrap; border: 0; background: none; padding: 0.45rem 0.9rem; border-radius: 999px; cursor: pointer; font-weight: 600; font-size: 0.85rem; color: var(--ink-2); display: inline-flex; gap: 0.35rem; align-items: center; }
+.seg button svg { width: 16px; height: 16px; }
+.seg button.on { background: var(--card); color: var(--ink); box-shadow: var(--shadow); }
+.status-dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: var(--ink-3); margin-right: 6px; }
+.status-dot.ok { background: var(--sage); box-shadow: 0 0 0 4px var(--sage-soft); }
+.status-dot.warn { background: var(--accent-2); }

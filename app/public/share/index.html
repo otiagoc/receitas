@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Receitas — a partilhar…</title>
+<style>body{font-family:system-ui,sans-serif;background:#f5efe3;color:#2b2620;display:grid;place-items:center;height:100vh;margin:0}</style>
+</head>
+<body>
+<p>A abrir as Receitas…</p>
+<script>
+  (function () {
+    var p = new URLSearchParams(location.search);
+    var all = [p.get('url'), p.get('text'), p.get('title')].filter(Boolean).join(' ');
+    var m = all.match(/https?:\/\/(?:www\.)?(?:instagram\.com|instagr\.am)\/[^\s"'<>]+/i);
+    var target = '../#/add' + (m ? '?url=' + encodeURIComponent(m[0]) : (all ? '?text=' + encodeURIComponent(all) : ''));
+    location.replace(target);
+  })();
+</script>
+</body>
+</html>
