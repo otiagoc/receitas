@@ -40,7 +40,7 @@ export default function Settings() {
 
   return (
     <div className="settings">
-      <header className="page-head"><div><p className="eyebrow">Conta &amp; app</p><h1>Definições</h1></div></header>
+      <header className="page-head"><div><h1>Definições</h1></div></header>
 
       <section className="card">
         <h2>Atalho do iPhone</h2>

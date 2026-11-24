@@ -46,7 +46,6 @@ export default function WhatCanICook() {
     <div className="wcc">
       <header className="page-head">
         <div>
-          <p className="eyebrow">Frigorífico &amp; despensa</p>
           <h1>O que faço com…?</h1>
           <p className="sub">Diz-me o que tens e eu encontro a receita certa. Sal, pimenta, azeite e água não contam.</p>
         </div>

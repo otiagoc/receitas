@@ -28,7 +28,7 @@ export default function Steps({ recipe }: { recipe: Recipe }) {
           {s.svg && <Drawing svg={s.svg} className="step-drawing" label={s.title ?? `Passo ${s.n}`} />}
           <div className="step-text">
             <div className="step-head">
-              <span className="step-n hand">{s.n}</span>
+              <span className="step-n">{s.n}</span>
               {s.title && <h3>{s.title}</h3>}
             </div>
             <p>{s.text}</p>

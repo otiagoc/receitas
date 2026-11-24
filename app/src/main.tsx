@@ -9,6 +9,7 @@ import './styles/home.css';
 import './styles/recipe.css';
 import './styles/cook.css';
 import './styles/misc.css';
+import './styles/ios.css';
 
 registerSW({ immediate: true });
 

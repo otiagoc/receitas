@@ -33,7 +33,7 @@ export default function RecipePage() {
   }
 
   const back = (
-    <button className="back-link" onClick={() => (window.history.length > 1 ? nav(-1) : nav('/'))}><IconLeft /> Receitas</button>
+    <button className="back-link" onClick={() => (window.history.length > 1 ? nav(-1) : nav('/'))}><IconLeft /><span>Receitas</span></button>
   );
 
   if (recipe.status !== 'done') {
@@ -83,7 +83,7 @@ export default function RecipePage() {
         </div>
 
         <div className="hero-info">
-          {recipe.category && <p className="eyebrow">{recipe.category}{recipe.cuisine ? ` · ${recipe.cuisine}` : ''}</p>}
+          {recipe.category && <p className="kicker">{[recipe.category, recipe.cuisine].filter(Boolean).join(', ')}</p>}
           <h1>{recipe.title}</h1>
           {recipe.author && (
             <p className="author">por <a href={`https://www.instagram.com/${recipe.author.replace(/^@/, '')}/`} target="_blank" rel="noreferrer">@{recipe.author.replace(/^@/, '')}</a></p>

@@ -60,7 +60,6 @@ export default function Shopping() {
     <div className="shopping">
       <header className="page-head">
         <div>
-          <p className="eyebrow">Para o supermercado</p>
           <h1>Lista de compras</h1>
           {items.length > 0 && <p className="sub">{display.filter((d) => !d.checked).length} por comprar · {display.filter((d) => d.checked).length} no carrinho</p>}
         </div>

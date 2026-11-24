@@ -62,7 +62,6 @@ export default function Add() {
     <div className="add-wrap">
       <header className="page-head">
         <div>
-          <p className="eyebrow">Nova receita</p>
           <h1>Adicionar</h1>
           <p className="sub">Cola o link de um reel ou publicação do Instagram com uma receita.</p>
         </div>

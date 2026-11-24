@@ -56,8 +56,7 @@ export default function Home() {
       <header className="home-head">
         <div className="mobile-only"><Logo /></div>
         <div className="desk-only">
-          <p className="eyebrow">O meu caderno</p>
-          <h1>As minhas receitas</h1>
+          <h1>Receitas</h1>
         </div>
         <Link to="/add" className="btn accent small mobile-only" aria-label="Adicionar receita"><IconPlus /> Adicionar</Link>
       </header>

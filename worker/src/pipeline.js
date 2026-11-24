@@ -13,7 +13,7 @@ import { updateRecipe, uploadCover } from './db.js';
 const NOT_RECIPE = 'Este vídeo não parece ter uma receita.';
 
 function jobDir(id) {
-  const dir = path.join(config.tmpDir, `job-${id}`);
+  const dir = path.join(config.tmpDir, `job-${id}-${process.pid}`); // unique per process: concurrent runs never share a dir
   fs.rmSync(dir, { recursive: true, force: true });
   fs.mkdirSync(dir, { recursive: true });
   return dir;
