@@ -47,7 +47,6 @@ export function RecipesProvider({ children }: { children: ReactNode }) {
   }, []);
 
   useEffect(() => {
-    if (!session) { setRecipes([]); setLoading(true); return; }
     void refresh();
     const channel = supabase
       .channel('recipes-live')

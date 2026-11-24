@@ -28,7 +28,6 @@ export function ShoppingProvider({ children }: { children: ReactNode }) {
   }, []);
 
   useEffect(() => {
-    if (!session) { setItems([]); return; }
     void load();
     const ch = supabase
       .channel('shopping-live')
