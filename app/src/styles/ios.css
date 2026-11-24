@@ -97,7 +97,7 @@ h3 { font-size: 17px; letter-spacing: -0.01em; }
   .recipe-hero { gap: 0; }
   .hero-media {
     margin: 0 calc(-1 * (var(--sar) + 16px)) 0 calc(-1 * (var(--sal) + 16px));
-    border-radius: 0; box-shadow: none; aspect-ratio: auto; height: min(64vh, 520px);
+    border-radius: 0; box-shadow: none; aspect-ratio: auto; height: min(52vh, 460px);
   }
   .hero-media::after {
     content: ''; position: absolute; inset: 0 0 auto; height: calc(var(--sat) + 70px); pointer-events: none;
