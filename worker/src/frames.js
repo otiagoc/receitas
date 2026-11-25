@@ -45,6 +45,23 @@ export async function extractFrames({ videos, photos = [] }, dir) {
   return frames;
 }
 
+/** Cover from the frame Claude picked: re-grab it at full resolution from the video (or the photo itself). */
+export async function coverFromFrame(frameRel, { videos, photos = [] }, dir) {
+  if (typeof frameRel !== 'string' || !/^frames\/(frame|photo)_[\w.-]+\.jpg$/.test(frameRel)) return null;
+  const abs = path.join(dir, frameRel);
+  if (!fs.existsSync(abs)) return null;
+  const out = path.join(dir, 'cover_pick.jpg');
+  const m = frameRel.match(/frame_\d+_([\d.]+)s\.jpg$/);
+  let args;
+  if (m && videos.length === 1) {
+    args = ['-y', '-v', 'error', '-ss', m[1], '-i', videos[0], '-frames:v', '1', '-vf', "scale='min(1080,iw)':-2", '-q:v', '3', out];
+  } else {
+    args = ['-y', '-v', 'error', '-i', abs, '-q:v', '3', out];
+  }
+  const r = await run('ffmpeg', args, { timeoutMs: config.timeouts.frames });
+  return r.code === 0 && fs.existsSync(out) ? out : null;
+}
+
 /** Produce a cover JPEG (max 1080 wide) from the thumbnail or a mid-video frame. */
 export async function makeCover({ cover, videos }, dir) {
   const out = path.join(dir, 'cover.jpg');

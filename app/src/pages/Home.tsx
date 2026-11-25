@@ -4,6 +4,7 @@ import { useRecipes } from '../hooks/useRecipes';
 import { CATEGORIES, DIFFICULTIES, totalMinutes, type Recipe } from '../lib/types';
 import { stripAccents } from '../lib/ingredients';
 import RecipeCard from '../components/RecipeCard';
+import Magazine from '../components/Magazine';
 import PendingCard from '../components/PendingCard';
 import SketchLoader from '../components/SketchLoader';
 import { IconHeart, IconPlus, IconSearch, IconSliders, IconX } from '../components/Icons';
@@ -50,6 +51,7 @@ export default function Home() {
   }, [done, f]);
 
   const activeFilters = Number(f.fav) + Number(!!f.maxMin) + Number(!!f.diff) + Number(f.sort !== 'recent');
+  const browsing = !f.q.trim() && !f.cat && activeFilters === 0;
 
   return (
     <div className="home">
@@ -106,7 +108,7 @@ export default function Home() {
         </div>
       )}
 
-      {cats.length > 1 && (
+      {cats.length > 1 && !browsing && (
         <div className="chips cat-chips">
           <button className={`chip ${!f.cat ? 'on' : ''}`} onClick={() => set({ cat: null })}>Todas</button>
           {cats.map((c) => (
@@ -134,6 +136,13 @@ export default function Home() {
         </div>
       ) : list.length === 0 ? (
         <div className="empty"><h3>Nada encontrado</h3><p>Experimenta outra pesquisa ou limpa os filtros.</p></div>
+      ) : browsing ? (
+        <Magazine
+          recipes={done}
+          onCategory={(c) => { set({ cat: c }); window.scrollTo({ top: 0 }); }}
+          onFavorites={() => { set({ fav: true }); window.scrollTo({ top: 0 }); }}
+          onQuick={() => { set({ maxMin: 30 }); window.scrollTo({ top: 0 }); }}
+        />
       ) : (
         <>
           <p className="count muted">{list.length} {list.length === 1 ? 'receita' : 'receitas'}</p>

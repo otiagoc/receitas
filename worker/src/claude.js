@@ -108,7 +108,8 @@ RESPONDE APENAS com um objeto JSON (sem texto antes/depois, sem \`\`\`), com est
      "duration_min": inteiro ou null, "timer_sec": segundos SÓ quando há uma espera/cozedura real (forno, cozer, repousar), senão null,
      "ingredients": ["nomes de ingredientes usados neste passo, iguais aos de ingredients[].name"]}
   ],
-  "tips": ["dicas úteis do autor ou tuas, a tratar o leitor por tu (conservação, substituições, variações)"]
+  "tips": ["dicas úteis do autor ou tuas, a tratar o leitor por tu (conservação, substituições, variações)"],
+  "cover_frame": "caminho EXATO de uma das imagens listadas (ex.: frames/frame_07_24.5s.jpg) que sirva de capa: o prato final pronto, apetitoso, bem enquadrado, SEM texto/legendas/autocolantes sobrepostos e sem caras em grande plano; se nenhuma servir, null"
 }
 Regras: números como números (não strings); passos curtos e acionáveis (normalmente 4–10); temperaturas em °C; medidas métricas (converte cups/oz/°F).
 

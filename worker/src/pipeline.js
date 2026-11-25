@@ -4,7 +4,7 @@ import path from 'node:path';
 import { config, log, timed, StageError } from './util.js';
 import { download } from './download.js';
 import { transcribe } from './transcribe.js';
-import { extractFrames, makeCover } from './frames.js';
+import { extractFrames, makeCover, coverFromFrame } from './frames.js';
 import { extractRecipe } from './claude.js';
 import { illustrate } from './illustrate.js';
 import { normalizeRecipe } from './schema.js';
@@ -45,7 +45,7 @@ export async function processRecipe(row) {
     const media = await timed('download', timings, () => download(row.source_url, dir));
     const tr = media.videos.length ? await timed('transcrição', timings, () => transcribe(media.videos, dir)) : null;
     const frames = await timed('frames', timings, () => extractFrames(media, dir));
-    const cover = await makeCover(media, dir);
+    let cover = await makeCover(media, dir);
 
     // Save raw source info early so it's visible even if later stages fail.
     await updateRecipe(row.id, { caption: media.caption || null, author: media.author, transcript: tr?.text || null });
@@ -61,6 +61,9 @@ export async function processRecipe(row) {
       if (e.notRecipe) throw new StageError(NOT_RECIPE, e.message, { retryable: false });
       throw new StageError('Não foi possível interpretar a receita.', e.message);
     }
+
+    const picked = await coverFromFrame(raw?.cover_frame, media, dir).catch(() => null);
+    if (picked) { cover = picked; log.info(`capa escolhida: ${raw.cover_frame}`); }
 
     const art = await timed('claude: ilustrações', timings, () => illustrate(recipe, dir));
     const coverUrl = cover ? await timed('upload capa', timings, () => uploadCover(row.id, cover).catch((e) => { log.warn(e.message); return null; })) : null;
