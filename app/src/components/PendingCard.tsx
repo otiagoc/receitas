@@ -5,7 +5,7 @@ import { useRecipes } from '../hooks/useRecipes';
 import { useToast } from '../hooks/useToast';
 
 const MSG: Record<string, string> = {
-  queued: 'Na fila — à espera do Mac…',
+  queued: 'Na fila. Começa dentro de minutos…',
   processing: 'A analisar o vídeo…',
 };
 

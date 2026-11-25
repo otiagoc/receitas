@@ -5,7 +5,7 @@ import SketchLoader from '../components/SketchLoader';
 import { IconCheck, IconLink } from '../components/Icons';
 
 const STATUS: Record<string, string> = {
-  queued: 'Na fila. O Mac vai pegar nela assim que estiver ligado.',
+  queued: 'Na fila. Começa a ser processada dentro de minutos.',
   processing: 'A analisar o vídeo e a desenhar os passos…',
   done: 'Pronta! Já está no teu caderno.',
   error: 'Algo correu mal ao processar.',

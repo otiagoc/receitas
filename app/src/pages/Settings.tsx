@@ -68,14 +68,14 @@ export default function Settings() {
         <p>
           <span className={`status-dot ${worker.processing.length ? 'ok' : worker.stale ? 'warn' : ''}`} />
           {worker.processing.length
-            ? `O Mac está a processar ${worker.processing.length === 1 ? 'uma receita' : `${worker.processing.length} receitas`} agora.`
+            ? `A processar ${worker.processing.length === 1 ? 'uma receita' : `${worker.processing.length} receitas`} agora.`
             : worker.queued.length
               ? `${worker.queued.length} ${worker.queued.length === 1 ? 'receita' : 'receitas'} na fila.`
               : 'Nada na fila.'}
         </p>
         {worker.lastDone && <p className="muted">Última receita pronta {timeAgo(worker.lastDone.updated_at)}: <i>{worker.lastDone.title}</i></p>}
         <p className="muted" style={{ fontSize: '0.88rem' }}>
-          {worker.stale ? '⚠ Há receitas à espera há algum tempo. ' : ''}O Mac precisa de estar ligado para processar novas receitas. As que partilhares entretanto ficam na fila.
+          {worker.stale ? '⚠ Há receitas à espera há algum tempo. ' : ''}As receitas novas são processadas na nuvem em até 10 minutos, mesmo com o Mac desligado. Com o Mac ligado é mais rápido.
         </p>
       </section>
 
