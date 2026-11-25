@@ -1,0 +1,112 @@
+/* Apple-native editorial layer (loaded last).
+   UI in SF Pro, recipe titles in New York, photos carry the colour, one orange tint. */
+
+body { font-family: var(--sans); font-size: 17px; letter-spacing: -0.015em; }
+h1, h2, h3, h4 { font-family: var(--sans); letter-spacing: -0.02em; }
+.hand { font-family: inherit; font-weight: inherit; font-size: inherit; color: inherit; transform: none; }
+.side-foot, .settings > .muted.hand { display: none; }
+
+/* Navigation: large title + plain tinted icon, like Apple apps */
+.home-head { margin: 4px 0 10px; }
+.home-head h1, .page-head h1 { font-size: 34px; font-weight: 700; letter-spacing: -0.03em; }
+.nav-icon { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: var(--paper-2); color: var(--accent); }
+.nav-icon svg { width: 20px; height: 20px; stroke-width: 2.4; }
+.tabbar { background: var(--bar); }
+.tab { font-weight: 500; font-size: 10px; }
+.tab.active, .tab.active .tab-ic { color: var(--accent); }
+
+/* Controls */
+.btn { border-radius: 12px; font-weight: 600; }
+.btn.accent { background: var(--accent); }
+.btn.soft { background: var(--paper-2); color: var(--accent); }
+.chip { background: var(--paper-2); font-size: 15px; }
+.chip.on { background: var(--ink); color: var(--paper); }
+.searchbar { background: var(--paper-2); border-radius: 10px; }
+.searchbar .icon-btn { color: var(--accent); }
+.cbox { border-color: var(--hair); }
+.ing.checked .cbox, .pick.on .cbox, .sitem.checked .cbox { background: var(--accent); border-color: var(--accent); }
+
+/* Home: magazine */
+.magazine { gap: 34px; margin-top: 14px; }
+.mag-feature { aspect-ratio: auto; border-radius: 0; box-shadow: none; background: none; color: var(--ink); overflow: visible; }
+.mag-feature::after { display: none; }
+.mag-feature-media { position: relative; aspect-ratio: 4 / 3.4; border-radius: 14px; overflow: hidden; background: var(--paper-2); }
+.mag-feature-media .cover-img, .mag-feature-media .cover-drawing { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.mag-feature-text { position: static; padding: 12px 2px 0; gap: 3px; }
+.mag-feature-kicker { color: var(--accent); font-size: 13px; font-weight: 600; letter-spacing: 0; }
+.mag-feature h2 { font-family: var(--serif); font-weight: 700; font-size: 28px; line-height: 1.12; letter-spacing: -0.01em; color: var(--ink); }
+.mag-feature-meta { color: var(--ink-3); font-size: 15px; font-weight: 400; }
+.mag-feature-meta svg { display: none; }
+.mag-row header { margin-bottom: 10px; padding-top: 14px; border-top: 0.5px solid var(--hair); }
+.mag-row h2 { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; }
+.mag-more { color: var(--accent); font-size: 17px; font-weight: 400; }
+.mag-scroller { grid-auto-columns: 44%; }
+.mag-tile-media { aspect-ratio: 4 / 5; border-radius: 12px; }
+.mag-tile h3 { font-family: var(--serif); font-weight: 600; font-size: 16px; line-height: 1.22; letter-spacing: -0.005em; }
+.mag-tile-meta { font-size: 13px; color: var(--ink-3); }
+
+/* Search results grid */
+.rcard-media { border-radius: 12px; }
+.rcard-body h3 { font-family: var(--serif); font-weight: 600; font-size: 16px; }
+.count { color: var(--ink-3); }
+
+/* Recipe page */
+.kicker { color: var(--accent); font-size: 13px; font-weight: 600; }
+.hero-info h1 { font-family: var(--serif); font-weight: 700; font-size: 32px; line-height: 1.1; letter-spacing: -0.01em; }
+.lede { font-family: var(--serif); font-size: 18px; line-height: 1.5; color: var(--ink-2); }
+.author a { color: var(--ink); }
+.meta div { background: var(--paper-2); border-radius: 12px; }
+.meta dd { font-family: var(--sans); font-weight: 600; font-size: 17px; }
+.tags .tag { background: var(--paper-2); }
+.hero-actions .icon-btn { background: var(--paper-2); color: var(--accent); }
+.insta-link { color: var(--accent); }
+.recipe-body h2 { font-size: 22px; font-weight: 700; }
+.ingredients ul { background: var(--paper-2); border-radius: 12px; }
+.ing-group h4 { font-family: var(--sans); font-size: 13px; font-weight: 600; color: var(--ink-3); text-transform: none; }
+.step-n { background: var(--ink); color: var(--paper); font-family: var(--sans); font-weight: 700; }
+.step-head h3 { font-size: 18px; font-weight: 600; }
+.step-text p { font-family: var(--serif); font-size: 18px; line-height: 1.55; }
+.step-drawing { border-radius: 14px; box-shadow: none; }
+.step-foot .tag { background: var(--paper-2); color: var(--ink-2); }
+.timer-btn { background: var(--accent); color: #fff; }
+.tips { background: var(--paper-2); }
+.tips h2 { font-family: var(--sans); font-size: 22px; font-weight: 700; color: var(--ink); }
+.tips ul { font-family: var(--serif); }
+.tips li::marker { color: var(--ink-3); }
+.notes-area { background-color: var(--paper-2); }
+
+/* Cook mode */
+.cook-text { font-family: var(--serif); font-weight: 400; font-size: clamp(22px, 5.6vw, 30px); line-height: 1.4; letter-spacing: -0.005em; }
+.cook-copy .step-n { background: var(--ink); }
+.dot.on { background: var(--accent); }
+.dot.past { background: var(--ink-3); }
+.bom { font-family: var(--serif); font-weight: 700; color: var(--ink); font-size: clamp(2.4rem, 10vw, 3.6rem); transform: none; }
+.cook-ings b { color: var(--ink); }
+
+/* Lists, settings, pending */
+.aisle ul, .wcc-row, .settings section, .pending, .filters, .wcc-input { background: var(--paper-2); }
+.aisle h3 { color: var(--ink-3); }
+.wcc-pct { font-family: var(--sans); color: var(--accent); }
+.meter span { background: var(--accent); }
+.pending-body strong { font-family: var(--sans); font-weight: 600; }
+.pending-err { font-family: var(--sans); font-size: 15px; font-weight: 700; transform: none; }
+.add-done .tick { background: var(--accent-soft); color: var(--accent); }
+.toast { background: rgba(30, 30, 30, 0.88); color: #fff; border: 0; }
+.cover-blank { background: var(--paper-2); color: var(--ink-3); font-family: var(--serif); }
+.sketch-loader .steam { stroke: var(--ink-3); }
+
+/* App Store-style info row instead of boxes */
+.meta { display: flex; grid-template-columns: none; gap: 0; overflow-x: auto; scrollbar-width: none; margin: 8px 0 4px; padding: 10px 0; border-block: 0.5px solid var(--hair); }
+.meta::-webkit-scrollbar { display: none; }
+.meta div, .meta div:first-child { flex: 1 0 auto; min-width: 84px; background: none; border-radius: 0; padding: 0 10px; text-align: center; border-left: 0.5px solid var(--hair); }
+.meta div:first-child { border-left: 0; }
+.meta dt { justify-content: center; font-size: 11px; font-weight: 500; color: var(--ink-3); }
+.meta dt svg { display: none; }
+.meta dd { font-size: 17px; font-weight: 700; color: var(--ink-2); margin-top: 2px; }
+.recipe .tags { display: none; }
+.hero-actions { margin-top: 6px; }
+.hero-actions .btn { border-radius: 14px; }
+.meta { flex-wrap: nowrap; }
+.meta div, .meta div:first-child { min-width: 0; padding: 0 6px; }
+.meta dd { font-size: 16px; white-space: nowrap; }
+.scaler-val strong { font-family: var(--sans); font-weight: 700; }

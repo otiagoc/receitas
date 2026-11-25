@@ -8,9 +8,9 @@ function Featured({ recipe }: { recipe: Recipe }) {
   const mins = totalMinutes(recipe);
   return (
     <Link to={`/receita/${recipe.id}`} className="mag-feature">
-      <Cover recipe={recipe} />
+      <div className="mag-feature-media"><Cover recipe={recipe} /></div>
       <div className="mag-feature-text">
-        <span className="mag-feature-kicker">Acabada de chegar</span>
+        <span className="mag-feature-kicker">Nova receita</span>
         <h2>{recipe.title}</h2>
         <span className="mag-feature-meta">
           {mins ? <><IconClock /> {formatMinutes(mins)}</> : null}

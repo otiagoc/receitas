@@ -10,6 +10,7 @@ import './styles/recipe.css';
 import './styles/cook.css';
 import './styles/misc.css';
 import './styles/ios.css';
+import './styles/apple.css';
 
 registerSW({ immediate: true });
 

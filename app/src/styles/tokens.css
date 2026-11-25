@@ -1,35 +1,35 @@
-/* Receitas — "Manjericão" palette: iOS-native neutrals, basil green, saffron for time. */
+/* Receitas — Apple-native editorial: system type (SF Pro + New York), white, one tint. */
 :root {
-  --paper: #f3f3f0;        /* grouped background */
-  --paper-2: #e8e8e4;      /* fills: search, segmented, chips */
-  --card: #ffffff;         /* grouped rows / surfaces */
-  --ink: #1d1d1f;
-  --ink-2: #55555a;
-  --ink-3: #8b8b90;
-  --line: #e1e1dc;
-  --hair: rgba(60, 60, 67, 0.16);
-  --accent: #2f7a4a;       /* manjericão */
-  --accent-2: #e9a100;     /* açafrão — timers & time */
-  --accent-soft: #e2efe5;
-  --sage: #2f7a4a;
-  --sage-soft: #e2efe5;
-  --danger: #d4372b;
-  --shadow: 0 1px 1px rgba(0, 0, 0, 0.03), 0 6px 18px -10px rgba(0, 0, 0, 0.18);
-  --shadow-lg: 0 2px 6px rgba(0, 0, 0, 0.06), 0 24px 44px -20px rgba(0, 0, 0, 0.35);
-  --radius: 18px;
-  --radius-sm: 12px;
-  --serif: ui-rounded, 'SF Pro Rounded', 'Nunito', -apple-system, system-ui, sans-serif;
-  --sans: -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, 'Segoe UI', Roboto, sans-serif;
-  --hand: 'Caveat', 'Bradley Hand', cursive;
+  --paper: #ffffff;
+  --paper-2: #f2f2f7;      /* iOS systemGray6: fills, search */
+  --card: #f2f2f7;         /* secondary surfaces */
+  --ink: #000000;
+  --ink-2: #3c3c43;
+  --ink-3: #8a8a8e;
+  --line: #e5e5ea;
+  --hair: rgba(60, 60, 67, 0.22);
+  --accent: #f26a1b;       /* single tint */
+  --accent-2: #f26a1b;
+  --accent-soft: #fdeee4;
+  --sage: #34c759;
+  --sage-soft: #e3f8e8;
+  --danger: #ff3b30;
+  --shadow: none;
+  --shadow-lg: 0 10px 30px -12px rgba(0, 0, 0, 0.25);
+  --radius: 14px;
+  --radius-sm: 10px;
+  --serif: ui-serif, 'New York', 'Iowan Old Style', 'Charter', Georgia, serif;
+  --sans: -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, 'Helvetica Neue', sans-serif;
+  --hand: var(--serif);
   --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
   --spring: cubic-bezier(0.34, 1.4, 0.5, 1);
   --sat: env(safe-area-inset-top, 0px);
   --sab: env(safe-area-inset-bottom, 0px);
   --sal: env(safe-area-inset-left, 0px);
   --sar: env(safe-area-inset-right, 0px);
-  --tabbar-h: 58px;
-  --drawing-bg: #fffcf4;
-  --bar: rgba(249, 249, 247, 0.78);
+  --tabbar-h: 54px;
+  --drawing-bg: #fbf8f2;
+  --bar: rgba(255, 255, 255, 0.82);
   color-scheme: light;
 }
 
@@ -38,21 +38,20 @@
     --paper: #000000;
     --paper-2: #1c1c1e;
     --card: #1c1c1e;
-    --ink: #f5f5f7;
-    --ink-2: #b4b4b9;
-    --ink-3: #8b8b90;
-    --line: #2c2c2e;
-    --hair: rgba(84, 84, 88, 0.55);
-    --accent: #52c47f;
-    --accent-2: #ffbf2e;
-    --accent-soft: #15301f;
-    --sage: #52c47f;
-    --sage-soft: #15301f;
-    --danger: #ff6a5c;
-    --shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
-    --shadow-lg: 0 24px 44px -20px rgba(0, 0, 0, 0.8);
-    --drawing-bg: #f6f0e2;
-    --bar: rgba(22, 22, 24, 0.78);
+    --ink: #ffffff;
+    --ink-2: #ebebf5;
+    --ink-3: #8d8d93;
+    --line: #38383a;
+    --hair: rgba(84, 84, 88, 0.6);
+    --accent: #ff8a3d;
+    --accent-2: #ff8a3d;
+    --accent-soft: #3a2214;
+    --sage: #30d158;
+    --sage-soft: #12301b;
+    --danger: #ff453a;
+    --shadow-lg: none;
+    --drawing-bg: #f6f1e6;
+    --bar: rgba(18, 18, 18, 0.82);
     color-scheme: dark;
   }
 }
@@ -61,20 +60,19 @@
   --paper: #000000;
   --paper-2: #1c1c1e;
   --card: #1c1c1e;
-  --ink: #f5f5f7;
-  --ink-2: #b4b4b9;
-  --ink-3: #8b8b90;
-  --line: #2c2c2e;
-  --hair: rgba(84, 84, 88, 0.55);
-  --accent: #52c47f;
-  --accent-2: #ffbf2e;
-  --accent-soft: #15301f;
-  --sage: #52c47f;
-  --sage-soft: #15301f;
-  --danger: #ff6a5c;
-  --shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
-  --shadow-lg: 0 24px 44px -20px rgba(0, 0, 0, 0.8);
-  --drawing-bg: #f6f0e2;
-  --bar: rgba(22, 22, 24, 0.78);
+  --ink: #ffffff;
+  --ink-2: #ebebf5;
+  --ink-3: #8d8d93;
+  --line: #38383a;
+  --hair: rgba(84, 84, 88, 0.6);
+  --accent: #ff8a3d;
+  --accent-2: #ff8a3d;
+  --accent-soft: #3a2214;
+  --sage: #30d158;
+  --sage-soft: #12301b;
+  --danger: #ff453a;
+  --shadow-lg: none;
+  --drawing-bg: #f6f1e6;
+  --bar: rgba(18, 18, 18, 0.82);
   color-scheme: dark;
 }

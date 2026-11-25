@@ -8,7 +8,6 @@ import Magazine from '../components/Magazine';
 import PendingCard from '../components/PendingCard';
 import SketchLoader from '../components/SketchLoader';
 import { IconHeart, IconPlus, IconSearch, IconSliders, IconX } from '../components/Icons';
-import { Logo } from '../components/Layout';
 
 type Sort = 'recent' | 'fast' | 'az';
 interface Filters { q: string; cat: string | null; fav: boolean; maxMin: number | null; diff: string | null; sort: Sort }
@@ -56,11 +55,8 @@ export default function Home() {
   return (
     <div className="home">
       <header className="home-head">
-        <div className="mobile-only"><Logo /></div>
-        <div className="desk-only">
-          <h1>Receitas</h1>
-        </div>
-        <Link to="/add" className="btn accent small mobile-only" aria-label="Adicionar receita"><IconPlus /> Adicionar</Link>
+        <h1>Receitas</h1>
+        <Link to="/add" className="nav-icon mobile-only" aria-label="Adicionar receita"><IconPlus /></Link>
       </header>
 
       <div className="searchbar">
