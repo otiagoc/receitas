@@ -10,6 +10,7 @@ import sys
 import uuid
 
 ENDPOINT = "https://vhvhwfwkfdfzjoiqqqok.supabase.co/rest/v1/rpc/enqueue_recipe"
+DEBUG_ENDPOINT = "https://vhvhwfwkfdfzjoiqqqok.supabase.co/rest/v1/rpc/share_debug_log"
 APIKEY = "sb_publishable_x-_kXcu3XoDtwA6p04UFyQ_hB10FJIP"
 APP_URL = "https://otiagoc.github.io/receitas/"
 OBJ = "￼"  # object replacement char marks a variable position
@@ -69,20 +70,13 @@ def action(ident, params):
 
 
 def build(token):
-    u_text, u_urls, u_first, u_resp, u_resptxt, u_dict, u_msg = (uid() for _ in range(7))
+    u_text, u_urls, u_first, u_resp, u_resptxt, u_dict, u_msg, u_type, u_dbg = (uid() for _ in range(9))
     grp = uid()
     ext_input = {"Type": "ExtensionInput"}
 
     actions = [
         # 1. Shortcut Input -> Text
         action("is.workflow.actions.gettext", {"UUID": u_text, "WFTextActionText": text(ext_input)}),
-        # 2. Get URLs from the text (Instagram may share text containing the link)
-        action("is.workflow.actions.detect.link", {"UUID": u_urls, "WFInput": attach(out_ref(u_text, "Text"))}),
-        # 3. First URL
-        action("is.workflow.actions.getitemfromlist", {
-            "UUID": u_first, "WFItemSpecifier": "First Item",
-            "WFInput": attach(out_ref(u_urls, "URLs")),
-        }),
         # 4. POST to the RPC
         action("is.workflow.actions.downloadurl", {
             "UUID": u_resp,
@@ -93,7 +87,7 @@ def build(token):
             "WFHTTPBodyType": "JSON",
             "WFJSONValues": dict_field([
                 ("p_token", token),
-                ("p_url", text(out_ref(u_first, "Item from List"))),
+                ("p_url", text(ext_input, " ", out_ref(u_text, "Text"))),
             ]),
         }),
         # 5. Response as text (success = "uuid", error = {"message": ...})
@@ -135,7 +129,11 @@ def build(token):
         "WFWorkflowIcon": {"WFWorkflowIconStartColor": 4271458815, "WFWorkflowIconGlyphNumber": 59511},
         "WFWorkflowImportQuestions": [],
         "WFWorkflowTypes": ["ActionExtension"],
-        "WFWorkflowInputContentItemClasses": ["WFURLContentItem", "WFStringContentItem"],
+        "WFWorkflowInputContentItemClasses": [
+            "WFURLContentItem", "WFStringContentItem", "WFRichTextContentItem", "WFSafariWebPageContentItem",
+            "WFArticleContentItem", "WFGenericFileContentItem", "WFImageContentItem", "WFAVAssetContentItem",
+            "WFPDFContentItem", "WFAppStoreAppContentItem", "WFDictionaryContentItem",
+        ],
         "WFWorkflowHasShortcutInputVariables": True,
         "WFWorkflowNoInputBehavior": {"Name": "WFWorkflowNoInputBehaviorGetClipboard", "Parameters": {}},
         "WFWorkflowOutputContentItemClasses": [],

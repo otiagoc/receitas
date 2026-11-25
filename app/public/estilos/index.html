@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Receitas — escolher estilo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Instrument+Sans:wght@400;500;600&family=Schibsted+Grotesk:wght@400;500;700;900&family=Alfa+Slab+One&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root { --cover: center / cover no-repeat; }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { background: #d9d9d4; font-family: system-ui, sans-serif; }
+  .intro { padding: calc(env(safe-area-inset-top) + 18px) 16px 6px; font: 500 15px/1.4 system-ui; color: #333; }
+  .intro b { font-weight: 700; }
+  .rail { display: flex; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 12px 16px 28px; }
+  .phone { flex: none; width: min(390px, calc(100vw - 32px)); height: 780px; overflow: hidden auto; border-radius: 34px; scroll-snap-align: center; position: relative; box-shadow: 0 20px 50px -20px rgba(0,0,0,.4); }
+  .tag { display: block; text-align: center; font: 700 14px/1 system-ui; color: #222; margin-top: 12px; }
+  .col { flex: none; }
+  img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+  /* ---------- A · Risografia ---------- */
+  .riso { background: #fbfaf6; color: #23306b; font-family: 'Instrument Sans', sans-serif; padding: 28px 18px; }
+  .riso::before { content: ''; position: absolute; inset: 0; pointer-events: none; opacity: .5; mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 .2 0 0 0 0 .25 0 0 0 0 .5 0 0 0 .12 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+  .riso h1 { font-family: 'Bricolage Grotesque'; font-weight: 800; font-size: 76px; line-height: .82; letter-spacing: -.045em; color: #ff4fa3; position: relative; }
+  .riso h1 span { position: absolute; left: 3px; top: 3px; color: #2f4bb5; mix-blend-mode: multiply; }
+  .riso .sub { margin: 14px 0 18px; font-size: 15px; color: #2f4bb5; }
+  .riso .feat { position: relative; aspect-ratio: 1; background: #2f4bb5; overflow: hidden; }
+  .riso .feat img, .riso .duo img { filter: grayscale(1) contrast(1.15) brightness(1.05); mix-blend-mode: screen; opacity: .9; }
+  .riso .feat::after, .riso .duo::after { content: ''; position: absolute; inset: 0; background: #ff4fa3; mix-blend-mode: multiply; opacity: .55; transform: translate(4px, 3px); }
+  .riso .feat h2 { position: absolute; z-index: 2; left: 12px; right: 12px; bottom: 12px; font-family: 'Bricolage Grotesque'; font-weight: 800; font-size: 30px; line-height: .95; letter-spacing: -.03em; color: #fff; }
+  .riso .row { display: grid; grid-template-columns: 92px 1fr; gap: 12px; align-items: center; padding: 14px 0; border-bottom: 2px solid #2f4bb5; }
+  .riso .duo { position: relative; aspect-ratio: 1; background: #2f4bb5; overflow: hidden; border-radius: 50%; }
+  .riso .row h3 { font-family: 'Bricolage Grotesque'; font-weight: 600; font-size: 20px; line-height: 1.05; letter-spacing: -.02em; color: #23306b; }
+  .riso .row p { font-size: 14px; color: #ff4fa3; font-weight: 600; margin-top: 4px; }
+
+  /* ---------- B · Ficha técnica ---------- */
+  .ficha { background: #fff; color: #000; font-family: 'Schibsted Grotesk', sans-serif; padding: 26px 16px; }
+  .ficha header { display: flex; justify-content: space-between; align-items: end; border-bottom: 6px solid #000; padding-bottom: 8px; }
+  .ficha h1 { font-weight: 900; font-size: 50px; letter-spacing: -.05em; line-height: .9; }
+  .ficha header small { font-size: 13px; font-weight: 500; text-align: right; line-height: 1.25; }
+  .ficha .search { margin: 14px 0; border: 2px solid #000; padding: 11px 12px; font-size: 16px; color: #777; }
+  .ficha .item { display: grid; grid-template-columns: 76px 1fr 64px; gap: 12px; padding: 12px 0; border-bottom: 1.5px solid #000; align-items: start; }
+  .ficha .t { font-weight: 900; font-size: 40px; line-height: .85; letter-spacing: -.05em; color: #e8392b; }
+  .ficha .t small { display: block; font-size: 12px; letter-spacing: 0; font-weight: 700; color: #000; margin-top: 4px; }
+  .ficha h3 { font-weight: 700; font-size: 18px; line-height: 1.12; letter-spacing: -.02em; }
+  .ficha .meta { font-size: 13px; color: #555; margin-top: 4px; }
+  .ficha .th { width: 64px; height: 64px; }
+  .ficha .bar { position: sticky; bottom: 0; margin: 18px -16px -26px; background: #e8392b; color: #fff; font-weight: 700; font-size: 17px; padding: 16px; display: flex; justify-content: space-between; }
+
+  /* ---------- C · Tasca ---------- */
+  .tasca { background: #12392d; color: #f1e7d2; font-family: 'Work Sans', sans-serif; padding: 28px 18px;
+    background-image: radial-gradient(circle at 12px 12px, rgba(241,231,210,.05) 2px, transparent 2.5px); background-size: 24px 24px; }
+  .tasca h1 { font-family: 'Alfa Slab One'; font-weight: 400; font-size: 46px; line-height: 1; color: #e9b03b; }
+  .tasca .sub { font-size: 15px; margin: 8px 0 20px; opacity: .8; }
+  .tasca .arch { border-radius: 200px 200px 14px 14px; overflow: hidden; aspect-ratio: 4 / 4.6; border: 3px solid #e9b03b; }
+  .tasca .feat h2 { font-family: 'Alfa Slab One'; font-weight: 400; font-size: 26px; line-height: 1.08; margin: 14px 0 4px; }
+  .tasca .feat p { font-size: 14px; color: #e9b03b; font-weight: 600; }
+  .tasca .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px 14px; margin-top: 26px; }
+  .tasca .grid .arch { border-width: 2px; aspect-ratio: 3 / 3.8; }
+  .tasca .grid h3 { font-weight: 600; font-size: 15px; line-height: 1.2; margin-top: 8px; }
+  .tasca .grid p { font-size: 13px; color: #e9b03b; margin-top: 2px; }
+</style>
+</head>
+<body>
+<p class="intro">Desliza para o lado e vê os 3 estilos. <b>Diz-me qual preferes</b> (A, B ou C), ou o que gostas em cada um.</p>
+<div class="rail" id="rail"></div>
+<script>
+const R = [
+  ["Tacos crocantes de cheeseburger","Pratos principais",50,"Fácil","e736061a-09ed-4e1c-a05a-21e033136116","1795603996076"],
+  ["Frango à Brás com batatas na air fryer","Pratos principais",40,"Fácil","dba66bc7-19f1-40cf-ac0a-d5c85501fc47","1795619462916"],
+  ["Focaccinas recheadas de carne picada e queijo","Snacks",35,"Fácil","517c3650-39ab-4d8e-a175-0e6bda64aaa3","1795619325045"],
+  ["Esparguete à carbonara com guanciale","Massas",25,"Média","861d5f06-848f-4d4c-9d31-7b54d690f085","1795619180072"],
+  ["Mini cheeseburgers com cebola caramelizada","Snacks",55,"Fácil","d3aa2cee-1c1a-4a0e-96ec-8722351e5808","1795567495387"],
+  ["Zuppa toscana com salsicha, batata e couve","Sopas",50,"Fácil","635cc6c4-f16e-4581-a907-21077c5a073f","1795567077317"],
+];
+const img = (r) => `<img src="https://vhvhwfwkfdfzjoiqqqok.supabase.co/storage/v1/object/public/covers/c7287970-b6d1-4249-8c71-ea464bb435a6/${r[4]}.jpg?v=${r[5]}" alt="" loading="lazy">`;
+const [f, ...rest] = R;
+
+const A = `<div class="phone riso">
+  <h1>Recei&shy;tas<span aria-hidden="true">Recei&shy;tas</span></h1>
+  <p class="sub">${R.length} pratos tirados dos reels</p>
+  <div class="feat">${img(f)}<h2>${f[0]}</h2></div>
+  ${rest.map(r => `<div class="row"><div class="duo">${img(r)}</div><div><h3>${r[0]}</h3><p>${r[2]} min, ${r[3].toLowerCase()}</p></div></div>`).join('')}
+</div>`;
+
+const B = `<div class="phone ficha">
+  <header><h1>receitas.</h1><small>${R.length} fichas<br>ordem: recentes</small></header>
+  <div class="search">Procurar por prato ou ingrediente</div>
+  ${R.map(r => `<div class="item"><div class="t">${r[2]}'<small>minutos</small></div><div><h3>${r[0]}</h3><p class="meta">${r[1]}, ${r[3].toLowerCase()}</p></div><div class="th">${img(r)}</div></div>`).join('')}
+  <div class="bar"><span>+ Adicionar reel</span><span>Lista (3)</span></div>
+</div>`;
+
+const C = `<div class="phone tasca">
+  <h1>A minha tasca</h1>
+  <p class="sub">O que se come hoje?</p>
+  <div class="feat"><div class="arch">${img(f)}</div><h2>${f[0]}</h2><p>${f[2]} min · ${f[1]}</p></div>
+  <div class="grid">${rest.map(r => `<div><div class="arch">${img(r)}</div><h3>${r[0]}</h3><p>${r[2]} min</p></div>`).join('')}</div>
+</div>`;
+
+document.getElementById('rail').innerHTML =
+  [['A · Risografia', A], ['B · Ficha técnica', B], ['C · Tasca', C]]
+  .map(([n, h]) => `<div class="col">${h}<span class="tag">${n}</span></div>`).join('');
+</script>
+</body>
+</html>
