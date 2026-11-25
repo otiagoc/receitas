@@ -3,6 +3,7 @@
 //   node src/index.js                 → long-running worker (realtime + poll every 30s)
 //   node src/index.js --once <url>    → create a row for <url> and process it now
 //   node src/index.js --id <uuid>     → (re)process an existing row
+//   node src/index.js --drain         → process everything queued, then exit (cloud runs)
 import { config, log } from './util.js';
 import { login, claimNext, subscribe, insertRecipe, getRecipe, updateRecipe } from './db.js';
 import { processRecipe } from './pipeline.js';
@@ -29,6 +30,20 @@ async function runId(id) {
   const r = await processRecipe(row);
   console.log(JSON.stringify(r, null, 2));
   process.exit(r.ok ? 0 : 1);
+}
+
+async function runDrain() {
+  const deadline = Date.now() + Number(process.env.RECEITAS_DRAIN_MINUTES || 50) * 60_000;
+  await login();
+  let n = 0, failed = 0;
+  while (Date.now() < deadline) {
+    const row = await claimNext();
+    if (!row) break;
+    const r = await processRecipe(row);
+    n++; if (!r?.ok) failed++;
+  }
+  log.info(`drain: ${n} processada(s), ${failed} com erro`);
+  process.exit(0);
 }
 
 async function runLoop() {
@@ -82,5 +97,6 @@ if (process.argv.includes('--once') && !once) {
   process.exit(2);
 }
 if (once) runOnce(once).catch((e) => { log.error(e.message); process.exit(1); });
+else if (process.argv.includes('--drain')) runDrain().catch((e) => { log.error(e.message); process.exit(1); });
 else if (id) runId(id).catch((e) => { log.error(e.message); process.exit(1); });
 else runLoop().catch((e) => { log.error(e.message); process.exit(1); });

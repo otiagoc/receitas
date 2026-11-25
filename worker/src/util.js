@@ -17,6 +17,7 @@ function readCredentials() {
       if (m) out[m[1]] = m[2].replace(/^['"]|['"]$/g, '');
     }
   } catch (e) {
+    if (process.env.RECEITAS_EMAIL && process.env.RECEITAS_PASSWORD) return out; // cloud: secrets come from env
     throw new Error(`Não foi possível ler o ficheiro de credenciais (${file}): ${e.code || e.message}`);
   }
   return out;

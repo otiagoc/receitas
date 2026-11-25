@@ -1,0 +1,78 @@
+name: Processar receitas (nuvem)
+
+# Runs the same worker as the Mac, in the cloud, so recipes get processed with the computer off.
+# Cheap check first: if nothing is queued, the job ends in a few seconds.
+on:
+  schedule:
+    - cron: '*/10 * * * *'
+  workflow_dispatch:
+  repository_dispatch:
+    types: [recipe]
+
+concurrency:
+  group: recipe-worker
+  cancel-in-progress: false
+
+jobs:
+  drain:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      SUPABASE_URL: https://vhvhwfwkfdfzjoiqqqok.supabase.co
+      SUPABASE_KEY: sb_publishable_x-_kXcu3XoDtwA6p04UFyQ_hB10FJIP
+    steps:
+      - name: Há receitas na fila?
+        id: queue
+        run: |
+          n=$(curl -sf "$SUPABASE_URL/rest/v1/recipes?select=id&or=(status.eq.queued,and(status.eq.processing,locked_at.lt.$(date -u -d '-20 min' +%Y-%m-%dT%H:%M:%SZ)))&attempts=lt.3" \
+              -H "apikey: $SUPABASE_KEY" | grep -o '"id"' | wc -l)
+          echo "count=$n" >> "$GITHUB_OUTPUT"
+          echo "Na fila: $n"
+
+      - uses: actions/checkout@v4
+        if: steps.queue.outputs.count != '0'
+
+      - uses: actions/setup-node@v4
+        if: steps.queue.outputs.count != '0'
+        with:
+          node-version: 22
+
+      - name: Ferramentas (ffmpeg, yt-dlp, Claude Code)
+        if: steps.queue.outputs.count != '0'
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg cmake > /dev/null
+          pip install -q --upgrade yt-dlp
+          npm install -g @anthropic-ai/claude-code > /dev/null
+          cd worker && npm ci --silent
+
+      - name: Cache whisper.cpp + modelo
+        if: steps.queue.outputs.count != '0'
+        id: wcache
+        uses: actions/cache@v4
+        with:
+          path: ~/whisper
+          key: whisper-v1-small
+
+      - name: Compilar whisper.cpp
+        if: steps.queue.outputs.count != '0' && steps.wcache.outputs.cache-hit != 'true'
+        run: |
+          git clone -q --depth 1 https://github.com/ggml-org/whisper.cpp ~/whisper-src
+          cmake -S ~/whisper-src -B ~/whisper-src/build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF > /dev/null
+          cmake --build ~/whisper-src/build -j --config Release --target whisper-cli > /dev/null
+          mkdir -p ~/whisper && cp ~/whisper-src/build/bin/whisper-cli ~/whisper/
+          curl -sL -o ~/whisper/ggml-small.bin https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-small.bin
+
+      - name: Processar fila
+        if: steps.queue.outputs.count != '0'
+        working-directory: worker
+        env:
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          RECEITAS_EMAIL: ${{ secrets.RECEITAS_EMAIL }}
+          RECEITAS_PASSWORD: ${{ secrets.RECEITAS_PASSWORD }}
+          INSTAGRAM_COOKIES: ${{ secrets.INSTAGRAM_COOKIES }}
+          WHISPER_BIN: /home/runner/whisper/whisper-cli
+          WHISPER_MODEL: /home/runner/whisper/ggml-small.bin
+          RECEITAS_DRAIN_MINUTES: '50'
+        run: |
+          if [ -n "$INSTAGRAM_COOKIES" ]; then printf '%s\n' "$INSTAGRAM_COOKIES" > cookies.txt; fi
+          node src/index.js --drain
