@@ -109,7 +109,7 @@ RESPONDE APENAS com um objeto JSON (sem texto antes/depois, sem \`\`\`), com est
      "ingredients": ["nomes de ingredientes usados neste passo, iguais aos de ingredients[].name"]}
   ],
   "tips": ["dicas úteis do autor ou tuas, a tratar o leitor por tu (conservação, substituições, variações)"],
-  "cover_frame": "caminho EXATO de uma das imagens listadas (ex.: frames/frame_07_24.5s.jpg) que sirva de capa: o prato final pronto, apetitoso, bem enquadrado, SEM texto/legendas/autocolantes sobrepostos e sem caras em grande plano; se nenhuma servir, null"
+  "cover_frame": "caminho EXATO de uma das imagens listadas (ex.: frames/frame_07_24.5s.jpg) que sirva de capa: o prato final pronto, apetitoso e bem enquadrado. Prefere imagens SEM texto/legendas/autocolantes sobrepostos e sem caras em grande plano; se todas tiverem texto, escolhe a que tiver MENOS texto e mostrar melhor o prato. Só usa null se nenhuma imagem mostrar comida"
 }
 Regras: números como números (não strings); passos curtos e acionáveis (normalmente 4–10); temperaturas em °C; medidas métricas (converte cups/oz/°F).
 
